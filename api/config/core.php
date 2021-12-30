@@ -10,4 +10,3 @@ $key = "example_key";
 $issued_at = time();
 $expiration_time = $issued_at + (60 * 60); // valid for 1 hour
 $issuer = "http://localhost/mft_api";
-?>

@@ -47,8 +47,6 @@ if ($jwt) {
         $user->password = $data->password;
         $user->id = $decoded->data->id;
 
-        var_dump($user);
-
         // update the user record
         if ($user->update()) {
             // we need to re-generate jwt because user details might be different

@@ -14,7 +14,7 @@ include_once 'objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// instantiate product object
+// instantiate user object
 $user = new User($db);
 
 // get posted data
@@ -47,4 +47,4 @@ else {
     // display message: unable to create user
     echo json_encode(array("message" => "Unable to create user."));
 }
-?>
+
