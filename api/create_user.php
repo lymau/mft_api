@@ -20,7 +20,9 @@ $user = new User($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// set product property values
+// TODO: Add validation to check if it was a valid input from user
+
+// set user property values
 $user->fullname = $data->fullname;
 $user->email = $data->email;
 $user->password = $data->password;
@@ -47,4 +49,3 @@ else {
     // display message: unable to create user
     echo json_encode(array("message" => "Unable to create user."));
 }
-
