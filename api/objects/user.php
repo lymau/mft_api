@@ -20,10 +20,9 @@ class User
         $this->conn = $db;
     }
 
-// create new user record
+    // create new user record
     function create()
     {
-
         // insert query
         $query = "INSERT INTO " . $this->table_name . "
             SET
@@ -55,7 +54,7 @@ class User
         return false;
     }
 
-// check if given email exist in the database
+    // check if given email exist in the database
     function emailExists()
     {
 
@@ -99,7 +98,7 @@ class User
         return false;
     }
 
-// update a user record
+    // update a user record
     public function update()
     {
 
@@ -142,5 +141,4 @@ class User
 
         return false;
     }
-
 }

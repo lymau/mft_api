@@ -20,32 +20,40 @@ $user = new User($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-// TODO: Add validation to check if it was a valid input from user
+// valid fullname
+if (strlen($data->fullname) < 5 || strlen($data->fullname) > 100) {
+    http_response_code(400);
+    echo json_encode(array("message" => "Name must be greater than 5 and less than 100."));
+    return false;
+}
+// valid email
+if (!filter_var($data->email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(array("message" => "Email is invalid."));
+    return false;
+}
+// valid password
+if (strlen($data->password) < 8) {
+    http_response_code(400);
+    echo json_encode(array("message" => "Password must be greater than 8 characters."));
+    return false;
+}
 
 // set user property values
 $user->fullname = $data->fullname;
 $user->email = $data->email;
 $user->password = $data->password;
 
-// create the user
-if (
-    !empty($user->fullname) &&
-    !empty($user->email) &&
-    !empty($user->password) &&
-    $user->create()
-) {
-
-    // set response code
-    http_response_code(200);
-
-    // display message: user was created
-    echo json_encode(array("message" => "User was created."));
-} // message if unable to create user
-else {
-
-    // set response code
+if ($user->emailExists()) {
     http_response_code(400);
-
-    // display message: unable to create user
-    echo json_encode(array("message" => "Unable to create user."));
+    echo json_encode(array("message" => "User is already exists."));
+    return false;
+} else {
+    if ($user->create()) {
+        http_response_code(200);
+        echo json_encode(array("message" => "User was created."));
+    } else {
+        http_response_code(400);
+        echo json_encode(array("message" => "Unable to create user."));
+    }
 }
